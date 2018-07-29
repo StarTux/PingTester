@@ -9,7 +9,7 @@ commands:
     usage: 'Usage: /<command>'
     permission: pingtester.getping
 permissions:
-  pingtester.getping
+  pingtester.getping:
     description: Get your own ping
     default: true
   pingtester.getping.other:
