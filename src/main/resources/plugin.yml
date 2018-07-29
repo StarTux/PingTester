@@ -1,0 +1,17 @@
+name: PingTester
+description: 'Get a player''s ping'
+author: StarTux
+version: 0.2
+main: com.cavetale.pingtester.PingTesterPlugin
+commands:
+  getping:
+    description: 'Get a player''s ping'
+    usage: 'Usage: /<command>'
+    permission: pingtester.getping
+permissions:
+  pingtester.getping
+    description: 'get your own ping'
+    default: true
+  pingtester.getping.other:
+    description: 'get another player''s ping'
+    default: op
