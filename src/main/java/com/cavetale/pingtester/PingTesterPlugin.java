@@ -41,7 +41,8 @@ public final class PingTesterPlugin extends JavaPlugin {
             }
             int ping = getPing(player);
             if (ping < 0) ping = 0;
-            message(sender, "&bPing of &3%s&b:&r %d (%s&r)", player.getName(), ping, getPingQuality(ping));
+            message(sender, "&bPing of &3%s&b:&r %d (%s&r)",
+                    player.getName(), ping, getPingQuality(ping));
             return true;
         }
         if (args.length == 0) {
@@ -49,7 +50,7 @@ public final class PingTesterPlugin extends JavaPlugin {
                 message(sender, "&cPlayer expected");
                 return true;
             }
-            int ping = getPing((Player)sender);
+            int ping = getPing((Player) sender);
             if (ping < 0) ping = 0;
             message(sender, "&bYour ping:&r %d (%s&r)", ping, getPingQuality(ping));
             return true;

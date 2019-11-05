@@ -1,8 +1,12 @@
+main: com.cavetale.pingtester.PingTesterPlugin
 name: PingTester
+version: 0.1
+api-version: 1.13
 description: Get player ping
 author: StarTux
-version: 0.1
-main: com.cavetale.pingtester.PingTesterPlugin
+website: https://github.com/StarTux/PingTester
+depend: []
+softdepend: []
 commands:
   getping:
     description: Get player ping
