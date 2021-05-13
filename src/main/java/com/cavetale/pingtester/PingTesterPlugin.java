@@ -1,7 +1,5 @@
 package com.cavetale.pingtester;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -9,9 +7,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class PingTesterPlugin extends JavaPlugin {
-    private Field pingField;
-    private Method handleMethod;
-
     String format(String str, Object... args) {
         str = ChatColor.translateAlternateColorCodes('&', str);
         if (args.length != 0) str = String.format(str, args);
@@ -39,7 +34,7 @@ public final class PingTesterPlugin extends JavaPlugin {
                 message(sender, "&cPlayer not found: %s", args[0]);
                 return true;
             }
-            int ping = getPing(player);
+            int ping = player.getPing();
             if (ping < 0) ping = 0;
             message(sender, "&bPing of &3%s&b:&r %d (%s&r)",
                     player.getName(), ping, getPingQuality(ping));
@@ -50,60 +45,12 @@ public final class PingTesterPlugin extends JavaPlugin {
                 message(sender, "&cPlayer expected");
                 return true;
             }
-            int ping = getPing((Player) sender);
+            Player player = (Player) sender;
+            int ping = player.getPing();
             if (ping < 0) ping = 0;
             message(sender, "&bYour ping:&r %d (%s&r)", ping, getPingQuality(ping));
             return true;
         }
         return false;
-    }
-
-    public Method getHandleMethod(Object obj) {
-        if (handleMethod == null) {
-            try {
-                handleMethod = obj.getClass().getMethod("getHandle", new Class[0]);
-            } catch (NoSuchMethodException nsme) {
-                nsme.printStackTrace();
-            }
-        }
-        return handleMethod;
-    }
-
-    public Field getPingField(Object obj) {
-        if (pingField == null) {
-            try {
-                pingField = obj.getClass().getField("ping");
-            } catch (NoSuchFieldException nsfe) {
-                nsfe.printStackTrace();
-            }
-        }
-        return pingField;
-    }
-
-    public int getPing(Player player) {
-        Object obj;
-        Field field;
-        Method method = getHandleMethod(player);
-        if (method == null) {
-            getLogger().warning("Method \"getHandle()\" not found.");
-            return 0;
-        }
-        obj = null;
-        try {
-            obj = method.invoke(player, new Object[0]);
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-            return 0;
-        }
-        field = getPingField(obj);
-        if (field == null) {
-            getLogger().warning("Field \"ping\" not found.");
-            return 0;
-        }
-        try {
-            return field.getInt(obj);
-        } catch (IllegalAccessException iae) {
-            return 0;
-        }
     }
 }
